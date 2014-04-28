@@ -44,13 +44,14 @@ class UpdateFileIni extends Users
         );
 
         $log = self::write_ini_file($content, $conf_user_folder.'/config.ini');
-        return $log;
+        return array('log' => $log, 
+            'test' => $this->directory);
     }
 
     private static function write_ini_file(array $data_array, $file_path)
     {
         $file_content = '';
-        $error = '';
+        $error = 'ok';
 
         foreach($data_array as $key => $groupe_n)
         {

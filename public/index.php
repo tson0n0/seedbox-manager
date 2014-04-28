@@ -8,6 +8,7 @@ use app\Lib\Support;
 use app\Lib\UpdateFileIni;
 
 /* REQUEST POST */
+
 if ( isset($_POST['reboot']) )
 {
     $user = new Users($file_user_ini, $userName);

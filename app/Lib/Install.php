@@ -36,4 +36,9 @@ class Install
 
         return $log;
     }
+    public static function firstLaunch() {
+        $array = parse_ini_file('./../conf/config.ini', true);
+
+        return $array;
+    }
 }

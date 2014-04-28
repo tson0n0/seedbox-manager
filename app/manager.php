@@ -1,7 +1,8 @@
 <?php
 
-if ( isset($_SERVER['REMOTE_USER']) || isset($_SERVER['PHP_AUTH_USER']) )
-    $userName = isset($_SERVER['REMOTE_USER']) ? $_SERVER['REMOTE_USER']:$_SERVER['PHP_AUTH_USER'];
+if ( /*isset($_SERVER['REMOTE_USER']) || isset($_SERVER['PHP_AUTH_USER'])*/ true )
+    //$userName = isset($_SERVER['REMOTE_USER']) ? $_SERVER['REMOTE_USER']:$_SERVER['PHP_AUTH_USER'];
+    $userName = "hydrog3n";
 else
     die('Le script n\'est pas prot&eacute;g&eacute; par une authentification.<br>V&eacute;rifiez la configuration de votre serveur web.');
 
@@ -9,16 +10,28 @@ else
 require_once './../vendor/autoload.php';
 
 /*check config app */
-use app\Lib\Install;
 
-if (file_exists('./../reboot-rtorrent')
+use app\Lib\Install;
+use app\Lib\UpdateFileIni;
+
+if ( isset($_POST['owner_change_config']))
+{   
+    $update = new UpdateFileIni('./../conf/config.ini', '');
+    $update_ini_file_log = $update->update_file_config($_POST, './../conf/');
+}
+
+if (/*file_exists('./../reboot-rtorrent')
     && Install::check_uid_file('./../reboot-rtorrent') == 0
-    && Install::getChmod('./../reboot-rtorrent', 4) == 4755)
-{
+    && Install::getChmod('./../reboot-rtorrent', 4) == 4755*/ true)
+{   
+
     $uid_folder_users = Install::check_uid_file('./../conf/users/');
     $uid_user_php = Install::get_user_php();
-    if ( $uid_folder_users != $uid_user_php['num_uid'] )
-    {
+    $config = Install::firstLaunch();
+
+    if ( $uid_folder_users != $uid_user_php['num_uid'] || $config['nav']['active_rutorrent'] == 0)
+    {   
+        
         require_once('./install/installation.php');
         exit(0);
     }
