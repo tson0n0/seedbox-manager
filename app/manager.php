@@ -1,8 +1,7 @@
 <?php
 
-if ( /*isset($_SERVER['REMOTE_USER']) || isset($_SERVER['PHP_AUTH_USER'])*/ true )
-    //$userName = isset($_SERVER['REMOTE_USER']) ? $_SERVER['REMOTE_USER']:$_SERVER['PHP_AUTH_USER'];
-    $userName = "hydrog3n";
+if ( isset($_SERVER['REMOTE_USER']) || isset($_SERVER['PHP_AUTH_USER']) )
+    $userName = isset($_SERVER['REMOTE_USER']) ? $_SERVER['REMOTE_USER']:$_SERVER['PHP_AUTH_USER'];
 else
     die('Le script n\'est pas prot&eacute;g&eacute; par une authentification.<br>V&eacute;rifiez la configuration de votre serveur web.');
 
@@ -20,9 +19,9 @@ if ( isset($_POST['owner_change_config']))
     $update_ini_file_log = $update->update_file_config($_POST, './../conf/');
 }
 
-if (/*file_exists('./../reboot-rtorrent')
+if (file_exists('./../reboot-rtorrent')
     && Install::check_uid_file('./../reboot-rtorrent') == 0
-    && Install::getChmod('./../reboot-rtorrent', 4) == 4755*/ true)
+    && Install::getChmod('./../reboot-rtorrent', 4) == 4755)
 {   
 
     $uid_folder_users = Install::check_uid_file('./../conf/users/');
